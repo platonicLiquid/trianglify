@@ -1,0 +1,14 @@
+{
+  "name": "trianglify-test",
+  "version": "1.0.0",
+  "description": "Test environment for Trianglify package",
+  "main": "test.js",
+  "scripts": {
+    "test": "node test.js",
+    "install-local": "npm install .."
+  },
+  "type": "commonjs",
+  "dependencies": {
+    "trianglify": "file:.."
+  }
+}
