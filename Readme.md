@@ -39,22 +39,22 @@ Or download a .zip from the [**releases page**](https://github.com/qrohlf/triang
     width: window.innerWidth,
     height: window.innerHeight
   })
-  document.body.appendChild(pattern.toCanvas())
+  document.body.appendChild(pattern.toSVG())
 </script>
 ```
 
 **Node**
 ```js
 const trianglify = require('trianglify')
-const fs = require('fs')
 
-const canvas = trianglify({
+const pattern = trianglify({
   width: 1920,
   height: 1080
-}).toCanvas()
+})
 
-const file = fs.createWriteStream('trianglify.png')
-canvas.createPNGStream().pipe(file)
+// Get SVG as string
+const svgString = pattern.toSVG().toString()
+console.log(svgString)
 ```
 
 You can see the [`examples/`](./examples) folder for more usage examples.
@@ -84,7 +84,7 @@ console.log(pattern instanceof trianglify.Pattern) // true
 
 ## pattern
 
-This object holds the generated geometry and colors, and exposes a number of methods for rendering this geometry to the DOM or a Canvas.
+This object holds the generated geometry and colors, and exposes methods for rendering this geometry to the DOM as SVG.
 
 
 **`pattern.opts`**
@@ -150,34 +150,9 @@ Alternate rendering function for SVG. Returns a lightweight node tree structure 
 `pattern.toSVG()`.
 
 
-**`pattern.toCanvas(destCanvas?, canvasOpts?)`**
 
-Rendering function for canvas. In browser and browser-like environments, returns a Canvas HTMLElement node. In node environments, this will return a node-canvas object which follows [a superset of the Web Canvas API](https://github.com/Automattic/node-canvas#documentation).
 
-If an existing canvas element is passed as the `destCanvas`, this function will render the pattern to the pre-existing element instead of creating a new one.
 
-To use this in a node.js environment, the optional dependency [node-canvas](https://github.com/Automattic/node-canvas) needs to be installed as a dependency of your project `npm install -save canvas`.
-
-The `canvasOpts` option allows for some canvas-specific customizations to the output:
-
-```js
-const canvasOpts = {
-  // determines how the canvas is rendered on high-DPI (aka "retina") devices.
-  // - 'auto' will automatically render the canvas at the appropriate scale ratio
-  //   for pixel-perfect display.
-  // - a numeric value will render the canvas at that specific scale factor
-  //   for example, 2.0 will render it at 2x resolution, wheras 0.5 will render
-  //   at half resolution
-  // - 'false' will disable scaling, and the canvas will be rendered at the 
-  //   exact resolution specified by `width, height`
-  scaling: 'auto',
-  // if the canvas is rendered at a different resolution than the {width, height}
-  // trianglify will apply some inline style attributes to scale it back to
-  // the requested {width, height} options. Set applyCssScaling to false to 
-  // disable this behavior.
-  applyCssScaling: true
-}
-```
 
 # 🎨 Configuration
 

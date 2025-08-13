@@ -14,7 +14,7 @@
       background: #000;
     }
 
-    svg, canvas {
+    svg {
       padding-bottom: 30px;
       text-align: center;
     }
@@ -34,8 +34,6 @@
 
     // Render to SVG
     document.body.appendChild(pattern.toSVG())
-    // Render to Canvas
-    document.body.appendChild(pattern.toCanvas())
 
     // stroke-only
     const strokeOnly = trianglify({
@@ -46,7 +44,6 @@
       strokeWidth: 1
     })
     document.body.appendChild(strokeOnly.toSVG())
-    document.body.appendChild(strokeOnly.toCanvas())
   </script>
   </body>
 </html>

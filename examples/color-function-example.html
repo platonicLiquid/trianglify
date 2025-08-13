@@ -48,7 +48,7 @@
 
     const addToPage = (pattern, description) => {
       document.body.appendChild(h('div', {'class': 'demo'}, [
-          pattern.toCanvas(),
+          pattern.toSVG(),
           h('h1', null, [document.createTextNode(description)])
         ]
       ))

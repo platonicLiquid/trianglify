@@ -42,9 +42,8 @@
   // gradient
   var pattern = trianglify({height, width, points})
 
-  // use the toCanvas function to render the generated geometry to an HTML5
-  // canvas element
-  document.body.appendChild(pattern.toCanvas())
+  // use the toSVG function to render the generated geometry to an SVG element
+  document.body.appendChild(pattern.toSVG())
   </script>
   </body>
 </html>

@@ -1,28 +1,27 @@
-import commonjs from '@rollup/plugin-commonjs'
-import resolve from '@rollup/plugin-node-resolve'
-import babel from '@rollup/plugin-babel'
-import { terser } from 'rollup-plugin-terser'
-import bundleSize from 'rollup-plugin-bundle-size'
-import pkg from './package.json'
+import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
 
 export default [
-  { // build for node & module bundlers
+  { // build for node & module bundlers (CommonJS)
     input: 'src/trianglify.js',
-    external: ['chroma-js', 'delaunator', 'canvas'],
-    plugins: [babel({ babelHelpers: 'bundled' }), bundleSize()],
-    output: { file: pkg.main, format: 'cjs' }
+    external: ['chroma-js', 'delaunator'],
+    output: { file: 'dist/trianglify.js', format: 'cjs' }
+  },
+  { // build for ES modules
+    input: 'src/trianglify.js',
+    external: ['chroma-js', 'delaunator'],
+    output: { file: 'dist/trianglify.esm.js', format: 'es' }
   },
   {
-    // build minified bundle to be used standalone for browser use
-    // note: // chroma.js weighs 40k minified, a smaller solution would be nice
+    // build bundle for browser use (includes dependencies)
     input: 'src/trianglify.js',
-    plugins: [terser({ output: { comments: false } }), resolve({ browser: true }), commonjs(), babel({ babelHelpers: 'bundled' }), bundleSize()],
+    plugins: [resolve({ browser: true }), commonjs()],
     output: { file: 'dist/trianglify.bundle.js', format: 'umd', name: 'trianglify' }
   },
   {
-    // build non-minified bundle to be used for debugging
+    // build debug bundle for browser use (includes dependencies, not minified)
     input: 'src/trianglify.js',
-    plugins: [resolve({ browser: true }), commonjs(), babel({ babelHelpers: 'bundled' }), bundleSize()],
+    plugins: [resolve({ browser: true }), commonjs()],
     output: { file: 'dist/trianglify.bundle.debug.js', format: 'umd', name: 'trianglify' }
   }
-]
+];
